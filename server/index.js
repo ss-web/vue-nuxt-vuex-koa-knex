@@ -26,11 +26,7 @@ var server = async function() {
 
   const router = new Router();
   router.get('/api', async (ctx, next) => {
-    let messages;
-    await knex.select().from('messages').timeout(1000).then(res => {
-        messages = JSON.stringify(res);
-    });
-    ctx.body = messages;
+    ctx.body = JSON.stringify(await knex.select().from('messages'));
   });
   // chat
   // io.on('connection', client => {
