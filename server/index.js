@@ -1,12 +1,15 @@
 import Koa from 'koa'
-import * as Router from 'koa-router';
+import * as Router from 'koa-router'
+import * as options from './knexfile'
+import * as _knex from 'knex'
 import io from 'socket.io-client'
 import { Nuxt, Builder } from 'nuxt'
 
-async function start () {
+var server = async function() {
   const app = new Koa()
   const host = process.env.HOST || '127.0.0.1'
   const port = process.env.PORT || 3000
+  const knex = _knex(options.development)
 
   // Import and Set Nuxt.js options
   const config = require('../nuxt.config.js')
@@ -23,7 +26,11 @@ async function start () {
 
   const router = new Router();
   router.get('/api', async (ctx, next) => {
-    ctx.body = 'api';
+    let messages;
+    await knex.select().from('messages').timeout(1000).then(res => {
+        messages = JSON.stringify(res);
+    });
+    ctx.body = messages;
   });
   // chat
   // io.on('connection', client => {
@@ -45,4 +52,4 @@ async function start () {
   console.log('Server listening on ' + host + ':' + port) // eslint-disable-line no-console
 }
 
-start()
+server()

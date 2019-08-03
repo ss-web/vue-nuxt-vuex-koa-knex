@@ -12424,34 +12424,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var koa__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! koa-router */ "koa-router");
 /* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(koa_router__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! nuxt */ "nuxt");
-/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(nuxt__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./knexfile */ "./server/knexfile.js");
+/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! knex */ "knex");
+/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(knex__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! nuxt */ "nuxt");
+/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(nuxt__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
 
-async function start() {
+
+
+var server = async function () {
   const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a();
   const host = process.env.HOST || '127.0.0.1';
-  const port = process.env.PORT || 3000; // Import and Set Nuxt.js options
+  const port = process.env.PORT || 3000;
+
+  const knex = knex__WEBPACK_IMPORTED_MODULE_3__(_knexfile__WEBPACK_IMPORTED_MODULE_2__["development"]); // Import and Set Nuxt.js options
+
 
   const config = __webpack_require__(/*! ../nuxt.config.js */ "./nuxt.config.js");
 
   config.dev = !(app.env === 'production'); // Instantiate nuxt.js
 
-  const nuxt = new nuxt__WEBPACK_IMPORTED_MODULE_3__["Nuxt"](config); // Build in development
+  const nuxt = new nuxt__WEBPACK_IMPORTED_MODULE_5__["Nuxt"](config); // Build in development
 
   if (config.dev) {
-    const builder = new nuxt__WEBPACK_IMPORTED_MODULE_3__["Builder"](nuxt);
+    const builder = new nuxt__WEBPACK_IMPORTED_MODULE_5__["Builder"](nuxt);
     await builder.build();
   }
 
   const router = new koa_router__WEBPACK_IMPORTED_MODULE_1__();
   router.get('/api', async (ctx, next) => {
-    ctx.body = 'api';
+    let messages;
+    await knex.select().from('messages').timeout(1000).then(res => {
+      messages = JSON.stringify(res);
+    });
+    ctx.body = messages;
   }); // chat
   // io.on('connection', client => {
   //   client.join('messages');
@@ -12471,9 +12484,34 @@ async function start() {
   });
   app.listen(port, host);
   console.log('Server listening on ' + host + ':' + port); // eslint-disable-line no-console
-}
+};
 
-start();
+server();
+
+/***/ }),
+
+/***/ "./server/knexfile.js":
+/*!****************************!*\
+  !*** ./server/knexfile.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  development: {
+    client: 'pg',
+    connection: {
+      host: 'localhost',
+      user: 'postgres',
+      password: '1',
+      database: 'chat'
+    },
+    pool: {
+      min: 0,
+      max: 7
+    }
+  }
+};
 
 /***/ }),
 
@@ -12551,6 +12589,17 @@ module.exports = require("http");
 /***/ (function(module, exports) {
 
 module.exports = require("https");
+
+/***/ }),
+
+/***/ "knex":
+/*!***********************!*\
+  !*** external "knex" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("knex");
 
 /***/ }),
 

@@ -6,6 +6,7 @@ module.exports = {
             user: 'postgres',
             password: '1',
             database: 'chat'
-        }
+        },
+        pool: { min: 0, max: 7 }
     }
 }
