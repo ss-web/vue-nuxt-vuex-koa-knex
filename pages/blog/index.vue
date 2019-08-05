@@ -1,28 +1,30 @@
 <template>
-    <div>
-        <ul>
-            <li v-for="page of pages" :key="page">
-                <a href="#" @click.prevent="openPage(page)">{{page}}</a>
-            </li>
-        </ul>
-    </div>
+  <section>
+    <h1>{{pageTitle}}</h1>
+    <ul>
+      <li v-for="page of pages" :key="page.id">
+        <a href="#" @click.prevent="openPage(page)">{{page.title}}</a>
+      </li>
+    </ul>
+  </section>
 </template>
 
 <script>
-export default {
+  export default {
     data: () => ({
-        pages: []
+      pageTitle: 'All posts'
     }),
-    async mounted() {
-        this.pages = await this.$axios.$get('/api/messages')
+    async asyncData({$axios}) {
+      const pages = await $axios.$get('/api/posts')
+      return {pages}
     },
     methods: {
-        openPage(path) {
-            this.$router.push('/blog/' + path)
-        },
-        loadPages(){
+      openPage(path) {
+        this.$router.push('/blog/' + path.url)
+      },
+      loadPages(){
 
-        }
+      }
     }
-}
+  }
 </script>
