@@ -12422,17 +12422,13 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var koa__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! koa */ "koa");
 /* harmony import */ var koa__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! koa-router */ "koa-router");
-/* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(koa_router__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./knexfile */ "./server/knexfile.js");
-/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! knex */ "knex");
-/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(knex__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! nuxt */ "nuxt");
-/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(nuxt__WEBPACK_IMPORTED_MODULE_5__);
-
+/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nuxt */ "nuxt");
+/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nuxt__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! http */ "http");
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./routes */ "./server/routes/index.js");
 
 
 
@@ -12440,37 +12436,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var server = async function () {
-  const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a();
-  const host = process.env.HOST || '127.0.0.1';
-  const port = process.env.PORT || 3000;
-
-  const knex = knex__WEBPACK_IMPORTED_MODULE_3__(_knexfile__WEBPACK_IMPORTED_MODULE_2__["development"]); // Import and Set Nuxt.js options
+  const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a(),
+        host = process.env.HOST || '127.0.0.1',
+        port = process.env.PORT || 3000,
+        server = http__WEBPACK_IMPORTED_MODULE_3___default.a.createServer(app.callback()),
+        io = socket_io_client__WEBPACK_IMPORTED_MODULE_2__(server); // Import and Set Nuxt.js options
 
 
   const config = __webpack_require__(/*! ../nuxt.config.js */ "./nuxt.config.js");
 
   config.dev = !(app.env === 'production'); // Instantiate nuxt.js
 
-  const nuxt = new nuxt__WEBPACK_IMPORTED_MODULE_5__["Nuxt"](config); // Build in development
+  const nuxt = new nuxt__WEBPACK_IMPORTED_MODULE_1__["Nuxt"](config); // Build in development
 
   if (config.dev) {
-    const builder = new nuxt__WEBPACK_IMPORTED_MODULE_5__["Builder"](nuxt);
+    const builder = new nuxt__WEBPACK_IMPORTED_MODULE_1__["Builder"](nuxt);
     await builder.build();
   }
 
-  const router = new koa_router__WEBPACK_IMPORTED_MODULE_1__();
-  router.get('/api', async (ctx, next) => {
-    ctx.body = JSON.stringify((await knex.select().from('messages')));
-  }); // chat
-  // io.on('connection', client => {
-  //   client.join('messages');
-  //   client.on('message', req => {
-  //       insertInto(req);
-  //       io.to('messages').emit('message', req.message);
-  //   });
-  // });
-
-  app.use(router.routes()).use(ctx => {
+  io.on('connection', client => {
+    client.join('messages');
+    client.on('message', req => {
+      // insertInto(req);
+      io.to('messages').emit('message', req.message);
+    });
+  });
+  app.use(_routes__WEBPACK_IMPORTED_MODULE_4__["default"].routes()).use(ctx => {
     ctx.status = 200;
     ctx.respond = false; // Mark request as handled for Koa
 
@@ -12508,6 +12499,40 @@ module.exports = {
     }
   }
 };
+
+/***/ }),
+
+/***/ "./server/routes/index.js":
+/*!********************************!*\
+  !*** ./server/routes/index.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! koa-router */ "koa-router");
+/* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa_router__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../knexfile */ "./server/knexfile.js");
+/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! knex */ "knex");
+/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(knex__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+const knex = knex__WEBPACK_IMPORTED_MODULE_2__(_knexfile__WEBPACK_IMPORTED_MODULE_1__["development"]);
+
+const router = new koa_router__WEBPACK_IMPORTED_MODULE_0__();
+router.get('/api/messages', async (ctx, next) => {
+  ctx.body = JSON.stringify((await knex.select().from('messages')));
+});
+/* harmony default export */ __webpack_exports__["default"] = (router); // const Router = require('koa-router');
+// const router = new Router();
+// router.get('/api', async (ctx, next) => {
+//     ctx.body = 'test'
+// });
+// module.exports = router;
 
 /***/ }),
 

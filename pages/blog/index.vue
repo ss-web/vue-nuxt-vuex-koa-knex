@@ -10,14 +10,18 @@
 
 <script>
 export default {
-    data(){
-        return{
-            pages: ['post1', 'post2', 'will-be-good']
-        }
+    data: () => ({
+        pages: []
+    }),
+    async mounted() {
+        this.pages = await this.$axios.$get('/api/messages')
     },
     methods: {
         openPage(path) {
             this.$router.push('/blog/' + path)
+        },
+        loadPages(){
+
         }
     }
 }

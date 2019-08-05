@@ -1,22 +1,15 @@
 <template>
   <div>
-    <app-logo/>
-    <select-component>
-      <select-component-child />
-    </select-component>  
+    <chat />
   </div>
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
-import SelectComponent from '~/components/select/Index.vue'
-import SelectComponentChild from '~/components/select/Child.vue'
+import Chat from '~/components/Chat.vue'
 
 export default {
   components: {
-    AppLogo,
-    SelectComponent,
-    SelectComponentChild
+    Chat
   },
   mounted(){
     this.test()
