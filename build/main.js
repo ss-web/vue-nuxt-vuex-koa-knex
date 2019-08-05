@@ -88,6 +88,31 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./knexfile.js":
+/*!*********************!*\
+  !*** ./knexfile.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  development: {
+    client: 'pg',
+    connection: {
+      host: 'localhost',
+      user: 'postgres',
+      password: '1',
+      database: 'chat'
+    },
+    pool: {
+      min: 0,
+      max: 7
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./node_modules/after/index.js":
 /*!*************************************!*\
   !*** ./node_modules/after/index.js ***!
@@ -12477,31 +12502,6 @@ server();
 
 /***/ }),
 
-/***/ "./server/knexfile.js":
-/*!****************************!*\
-  !*** ./server/knexfile.js ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = {
-  development: {
-    client: 'pg',
-    connection: {
-      host: 'localhost',
-      user: 'postgres',
-      password: '1',
-      database: 'chat'
-    },
-    pool: {
-      min: 0,
-      max: 7
-    }
-  }
-};
-
-/***/ }),
-
 /***/ "./server/routes/index.js":
 /*!********************************!*\
   !*** ./server/routes/index.js ***!
@@ -12513,7 +12513,7 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! koa-router */ "koa-router");
 /* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa_router__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../knexfile */ "./server/knexfile.js");
+/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../knexfile */ "./knexfile.js");
 /* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! knex */ "knex");
 /* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(knex__WEBPACK_IMPORTED_MODULE_2__);
@@ -12527,12 +12527,7 @@ const router = new koa_router__WEBPACK_IMPORTED_MODULE_0__();
 router.get('/api/messages', async (ctx, next) => {
   ctx.body = JSON.stringify((await knex.select().from('messages')));
 });
-/* harmony default export */ __webpack_exports__["default"] = (router); // const Router = require('koa-router');
-// const router = new Router();
-// router.get('/api', async (ctx, next) => {
-//     ctx.body = 'test'
-// });
-// module.exports = router;
+/* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 
