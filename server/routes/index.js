@@ -1,6 +1,7 @@
 import * as Router from 'koa-router'
 import * as options from '../../knexfile'
-import * as _knex from 'knex'
+// import '../plugins/paginate'
+import * as _knex from '../plugins/paginate'
 
 const knex = _knex(options.development)
 
@@ -12,13 +13,15 @@ router.get('/api/messages', async (ctx, next) => {
 
 router.get('/api/posts', async (ctx, next) => {
   // content - can have strong weight
-  const params = ['id','url', 'pagetitle', 'title', 'created_on']
-  ctx.body = JSON.stringify(await knex.select(params).from('posts'))
+  const page = (isNaN(ctx.query.page)) ? 1 : ctx.query.page,
+        params = ['id','url', 'pagetitle', 'title', 'created_on'],
+        body = JSON.stringify(await knex('posts').select(params).groupBy(params).orderBy('title').paginate(3, page))
+  ctx.body = (ctx.query.page !== undefined && isNaN(ctx.query.page)) ? [] : body
 });
 
 router.get('/api/posts/:path', async (ctx, next) => {
   const path = (isNaN(ctx.params.path)) ? 'url' : 'id';
-  ctx.body = JSON.stringify(await knex('posts').select(['id','content']).where(path, ctx.params.path))
+  ctx.body = JSON.stringify(await knex('posts').select().where(path, ctx.params.path))
 });
 
 

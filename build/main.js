@@ -12502,6 +12502,48 @@ server();
 
 /***/ }),
 
+/***/ "./server/plugins/paginate.js":
+/*!************************************!*\
+  !*** ./server/plugins/paginate.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = function (dbConfig) {
+  var knex = __webpack_require__(/*! knex */ "knex")(dbConfig);
+
+  var KnexQueryBuilder = __webpack_require__(/*! knex/lib/query/builder */ "knex/lib/query/builder");
+
+  KnexQueryBuilder.prototype.paginate = function (per_page, current_page) {
+    var pagination = {};
+    var per_page = per_page || 10;
+    var page = current_page || 1;
+    if (page < 1) page = 1;
+    var offset = (page - 1) * per_page;
+    return Promise.all([this.clone().count('* as count').first(), this.offset(offset).limit(per_page)]).then(([total, rows]) => {
+      var count = total.count;
+      var rows = rows;
+      pagination.total = count;
+      pagination.per_page = per_page;
+      pagination.offset = offset;
+      pagination.to = offset + rows.length;
+      pagination.last_page = Math.ceil(count / per_page);
+      pagination.current_page = page;
+      pagination.from = offset;
+      pagination.data = rows;
+      return pagination;
+    });
+  };
+
+  knex.queryBuilder = function () {
+    return new KnexQueryBuilder(knex.client);
+  };
+
+  return knex;
+};
+
+/***/ }),
+
 /***/ "./server/routes/index.js":
 /*!********************************!*\
   !*** ./server/routes/index.js ***!
@@ -12515,13 +12557,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa_router__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../knexfile */ "./knexfile.js");
 /* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! knex */ "knex");
-/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(knex__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugins/paginate */ "./server/plugins/paginate.js");
+/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_plugins_paginate__WEBPACK_IMPORTED_MODULE_2__);
+
+ // import '../plugins/paginate'
 
 
 
-
-const knex = knex__WEBPACK_IMPORTED_MODULE_2__(_knexfile__WEBPACK_IMPORTED_MODULE_1__["development"]);
+const knex = _plugins_paginate__WEBPACK_IMPORTED_MODULE_2__(_knexfile__WEBPACK_IMPORTED_MODULE_1__["development"]);
 
 const router = new koa_router__WEBPACK_IMPORTED_MODULE_0__();
 router.get('/api/messages', async (ctx, next) => {
@@ -12529,12 +12572,14 @@ router.get('/api/messages', async (ctx, next) => {
 });
 router.get('/api/posts', async (ctx, next) => {
   // content - can have strong weight
-  const params = ['id', 'url', 'pagetitle', 'title', 'created_on'];
-  ctx.body = JSON.stringify((await knex.select(params).from('posts')));
+  const page = isNaN(ctx.query.page) ? 1 : ctx.query.page,
+        params = ['id', 'url', 'pagetitle', 'title', 'created_on'],
+        body = JSON.stringify((await knex('posts').select(params).groupBy(params).orderBy('title').paginate(3, page)));
+  ctx.body = ctx.query.page !== undefined && isNaN(ctx.query.page) ? [] : body;
 });
 router.get('/api/posts/:path', async (ctx, next) => {
   const path = isNaN(ctx.params.path) ? 'url' : 'id';
-  ctx.body = JSON.stringify((await knex('posts').select(['id', 'content']).where(path, ctx.params.path)));
+  ctx.body = JSON.stringify((await knex('posts').select().where(path, ctx.params.path)));
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
@@ -12625,6 +12670,17 @@ module.exports = require("https");
 /***/ (function(module, exports) {
 
 module.exports = require("knex");
+
+/***/ }),
+
+/***/ "knex/lib/query/builder":
+/*!*****************************************!*\
+  !*** external "knex/lib/query/builder" ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("knex/lib/query/builder");
 
 /***/ }),
 
