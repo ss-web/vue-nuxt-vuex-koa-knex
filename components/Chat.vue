@@ -12,7 +12,7 @@
   </div>
   <div class="col-xs-12 col-sm-8">
     <ul class="list-group">
-      <li class="list-group-item" v-for="message of messages" :key="message">
+      <li class="list-group-item" v-for="message of messages" :key="message.id">
         {{message.message}}
       </li>
     </ul>
