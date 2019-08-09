@@ -1,0 +1,20 @@
+<template>
+  <div>
+    <list-tree :menu="menu" />  
+  </div>
+</template>
+
+<script>
+import ListTree from '~/components/common/ListTree.vue';
+import * as menu from '~/data/menu'
+
+export default {
+  name: 'long-menu',
+  components: {
+    ListTree
+  },
+  data: () => ({
+    menu
+  })
+}
+</script>
