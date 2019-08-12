@@ -30,8 +30,14 @@ var server = async function() {
         // insertInto(req);
         io.to('messages').emit('message', req.message);
     });
-  });
-  
+  })
+
+  // app.use(async (ctx, next) => {
+  //   ctx.set('Access-Control-Allow-Origin', '*');
+  //   ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  //   ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  //   await next();
+  // })
   app.use(rootRouter.routes()).use(ctx => {
     ctx.status = 200
     ctx.respond = false // Mark request as handled for Koa

@@ -12486,6 +12486,12 @@ var server = async function () {
       io.to('messages').emit('message', req.message);
     });
   });
+  app.use(async (ctx, next) => {
+    ctx.set('Access-Control-Allow-Origin', '*');
+    ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+    await next();
+  });
   app.use(_routes__WEBPACK_IMPORTED_MODULE_4__["default"].routes()).use(ctx => {
     ctx.status = 200;
     ctx.respond = false; // Mark request as handled for Koa
@@ -12494,6 +12500,7 @@ var server = async function () {
 
     nuxt.render(ctx.req, ctx.res);
   });
+  console.log(process.env.PORT);
   app.listen(port, host);
   console.log('Server listening on ' + host + ':' + port); // eslint-disable-line no-console
 };
