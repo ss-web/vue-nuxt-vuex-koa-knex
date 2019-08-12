@@ -5,7 +5,7 @@ module.exports = {
             host: 'localhost',
             user: 'postgres',
             password: '1',
-            database: 'chat'
+            database: 'chat1'
         },
         pool: { min: 0, max: 7 }
     }
