@@ -3,10 +3,10 @@
   <div class="col-xs-12 col-sm-4">
     <form>
       <div class="form-group">
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write your message"></textarea>
+        <textarea class="form-control" v-model="message" rows="3" placeholder="Write your message"></textarea>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary mb-2">Send</button>
+        <div class="btn btn-primary mb-2" @click="sendMessage">Send</div>
       </div>
     </form>
   </div>
@@ -21,12 +21,33 @@
 </template>
 
 <script>
+  // import io from 'socket.io-client'
+  
   export default {
     data: () => ({
-      messages: []
+      // socket: '',
+      messages: [],
+      message: ''
     }),
+    sockets: {
+      connect() {
+        console.log('Success IO')
+      },
+      message(message) {
+        console.log('message', message);
+      }
+    },
     async mounted(){
+      // this.socket = io()
       this.messages = await this.$axios.$get('/api/messages')
+    },
+    methods: {
+      sendMessage() {
+        this.$socket.emit('message', { message: this.message })
+        // console.log(this.$socket.emit('message', this.message))
+        // .socket.emit('message', this.message)
+        console.log(this.message)
+      },
     }
   }
 </script>

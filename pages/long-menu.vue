@@ -15,6 +15,12 @@ export default {
   },
   data: () => ({
     menu
-  })
+  }),
+  methods: {
+    logout(){
+      this.$store.dispatch('auth/logout')
+      this.$router.push('/')
+    }
+  }
 }
 </script>

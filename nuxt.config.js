@@ -25,6 +25,11 @@ module.exports = {
   modules: [
     '@nuxtjs/axios'
   ],
+
+  plugins: [
+    { src: '~/plugins/socket.io.js', ssr: false }
+  ],
+
   /*
   ** Build configuration
   */

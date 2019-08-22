@@ -1,24 +1,47 @@
 <template>
-  <form>
+  <form class="form-login" @submit.prevent="onSubmit">
+    <h1>Auth</h1>
     <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <input type="email" v-model="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      <input type="password" v-model="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
     </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <button type="submit" class="btn btn-success">Submit</button>
+    <nuxt-link class="btn btn-primary" to="/">Back to main</nuxt-link>
+  </form>                         
 </template>
 
 <script>
 export default {
-    layout: 'empty'
+    name: 'Auth',
+    layout: 'empty',
+    data(){
+        return{
+            email: '',
+            password: '',
+            valid: false
+        }
+    },
+    methods:{
+        onSubmit(){
+          if (!!this.email && !!this.password){
+            const { email, password } = this
+            this.$store.dispatch('auth/login', { email, password }).then(() => {
+              this.$router.push('/blog')
+            })
+          } else {
+            alert('Заполните оба поля')
+          }
+        }
+    }
 }
 </script>
+
+
+<style scoped>
+  .form-login{
+    margin: 80px auto;
+    max-width: 480px;
+  }
+</style>
