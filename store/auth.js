@@ -4,11 +4,11 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setAuth(state, params) {
+  SET_AUTH(state, params) {
     state.token = params.data.token
     state.role = params.data.role
   },
-  clearAuth() {
+  CLEAR_AUTH(state) {
     state.token = null
     state.role = null
   }
@@ -26,10 +26,10 @@ export const actions = {
         }
       );
     console.log(params)
-    commit('setAuth', params)
+    commit('SET_AUTH', params)
   },
   logout({commit}) {
-    commit('clearToken')
+    commit('CLEAR_AUTH')
   }
 }
 

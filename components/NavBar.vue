@@ -45,8 +45,15 @@ export default {
   },
   methods: {
     Logout() {
-      this.$store.dispatch('logout');
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/')
     }
   }
 }
 </script>
+
+<style>
+  .btn{
+    cursor: pointer;
+  }
+</style>
