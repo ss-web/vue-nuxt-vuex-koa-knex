@@ -88,31 +88,6 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./knexfile.js":
-/*!*********************!*\
-  !*** ./knexfile.js ***!
-  \*********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = {
-  development: {
-    client: 'pg',
-    connection: {
-      host: 'localhost',
-      user: 'postgres',
-      password: '1',
-      database: 'chat'
-    },
-    pool: {
-      min: 0,
-      max: 7
-    }
-  }
-};
-
-/***/ }),
-
 /***/ "./nuxt.config.js":
 /*!************************!*\
   !*** ./nuxt.config.js ***!
@@ -182,6 +157,43 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./server/app.js":
+/*!***********************!*\
+  !*** ./server/app.js ***!
+  \***********************/
+/*! exports provided: app, host, server, knex, port */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "app", function() { return app; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "host", function() { return host; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "server", function() { return server; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "knex", function() { return knex; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "port", function() { return port; });
+/* harmony import */ var koa__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! koa */ "koa");
+/* harmony import */ var koa__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! http */ "http");
+/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./knexfile */ "./server/knexfile.js");
+/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/paginate */ "./server/plugins/paginate.js");
+/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_plugins_paginate__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a(),
+      knex = _plugins_paginate__WEBPACK_IMPORTED_MODULE_3__(_knexfile__WEBPACK_IMPORTED_MODULE_2__["development"]),
+      host = process.env.HOST || '127.0.0.1',
+      port = process.env.PORT || 3000,
+      server = http__WEBPACK_IMPORTED_MODULE_1___default.a.createServer(app.callback());
+
+
+
+/***/ }),
+
 /***/ "./server/index.js":
 /*!*************************!*\
   !*** ./server/index.js ***!
@@ -191,76 +203,24 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var koa__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! koa */ "koa");
-/* harmony import */ var koa__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! nuxt */ "nuxt");
-/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(nuxt__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io */ "socket.io");
-/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! http */ "http");
-/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./routes */ "./server/routes/index.js");
-/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../knexfile */ "./knexfile.js");
-/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./plugins/paginate */ "./server/plugins/paginate.js");
-/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_plugins_paginate__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! nuxt */ "nuxt");
+/* harmony import */ var nuxt__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(nuxt__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes */ "./server/routes/index.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app */ "./server/app.js");
+/* harmony import */ var _sockets__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sockets */ "./server/sockets.js");
 
 
 
 
-
-
-
-
-const knex = _plugins_paginate__WEBPACK_IMPORTED_MODULE_6__(_knexfile__WEBPACK_IMPORTED_MODULE_5__["development"]); // import { app, host, port } from './app'
-
-
-const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a(),
-      host = process.env.HOST || '127.0.0.1',
-      port = process.env.PORT || 3000,
-      server = http__WEBPACK_IMPORTED_MODULE_3___default.a.createServer(app.callback()),
-      io = socket_io__WEBPACK_IMPORTED_MODULE_2__(server);
-
-io.on('connection', socket => {
-  console.log('io Connected');
-  socket.emit('newMessage', {
-    text: 'WHAT'
-  });
-});
-io.sockets.on('connection', client => {
-  console.log('a user connected: ' + client.id);
-  client.join('messages');
-  client.on('message', req => {
-    insertInto(req);
-    io.to('messages').emit('message', req.message);
-  }); // statuses
-
-  client.join('statuses');
-  client.on('status', req => {
-    knex('posts').where({
-      id: req.id
-    }).update('status', req.status).then(() => {
-      console.log(req);
-    });
-    io.to('statuses').emit('status', req.status);
-  });
-});
-
-function insertInto(req) {
-  req.idroom = 'messages';
-  knex.insert([req], ['id']).into('messages').then(() => {
-    console.log(req);
-  });
-}
 
 var start = async function () {
   const config = __webpack_require__(/*! ../nuxt.config.js */ "./nuxt.config.js");
 
-  config.dev = !(app.env === 'production');
-  const nuxt = new nuxt__WEBPACK_IMPORTED_MODULE_1__["Nuxt"](config);
+  config.dev = !(_app__WEBPACK_IMPORTED_MODULE_2__["app"].env === 'production');
+  const nuxt = new nuxt__WEBPACK_IMPORTED_MODULE_0__["Nuxt"](config);
 
   if (config.dev) {
-    const builder = new nuxt__WEBPACK_IMPORTED_MODULE_1__["Builder"](nuxt);
+    const builder = new nuxt__WEBPACK_IMPORTED_MODULE_0__["Builder"](nuxt);
     await builder.build();
   } // app.use(mount('/api', rootRouter.middleware()).use(ctx => {
   //   ctx.status = 200
@@ -271,18 +231,42 @@ var start = async function () {
   // add value to database
 
 
-  app.use(_routes__WEBPACK_IMPORTED_MODULE_4__["default"].routes()).use(ctx => {
+  _app__WEBPACK_IMPORTED_MODULE_2__["app"].use(_routes__WEBPACK_IMPORTED_MODULE_1__["default"].routes()).use(ctx => {
     ctx.status = 200;
     ctx.respond = false;
     ctx.req.ctx = ctx;
     nuxt.render(ctx.req, ctx.res);
   });
-  server.listen(port, host); // app.listen(port, host)
-
-  console.log('Server listening on ' + host + ':' + port);
+  _app__WEBPACK_IMPORTED_MODULE_2__["server"].listen(_app__WEBPACK_IMPORTED_MODULE_2__["port"], _app__WEBPACK_IMPORTED_MODULE_2__["host"]);
+  console.log('Server listening on ' + _app__WEBPACK_IMPORTED_MODULE_2__["host"] + ':' + _app__WEBPACK_IMPORTED_MODULE_2__["port"]);
 };
 
 start();
+
+/***/ }),
+
+/***/ "./server/knexfile.js":
+/*!****************************!*\
+  !*** ./server/knexfile.js ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  development: {
+    client: 'pg',
+    connection: {
+      host: 'localhost',
+      user: 'postgres',
+      password: '1',
+      database: 'chat'
+    },
+    pool: {
+      min: 0,
+      max: 7
+    }
+  }
+};
 
 /***/ }),
 
@@ -339,35 +323,28 @@ module.exports = function (dbConfig) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! koa-router */ "koa-router");
 /* harmony import */ var koa_router__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa_router__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../knexfile */ "./knexfile.js");
-/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../plugins/paginate */ "./server/plugins/paginate.js");
-/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_plugins_paginate__WEBPACK_IMPORTED_MODULE_2__);
-
-
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../app */ "./server/app.js");
 
  // const koaBody = require('koa-body')
 
-const knex = _plugins_paginate__WEBPACK_IMPORTED_MODULE_2__(_knexfile__WEBPACK_IMPORTED_MODULE_1__["development"]);
-
 const router = new koa_router__WEBPACK_IMPORTED_MODULE_0__();
 router.get('/api/messages', async (ctx, next) => {
-  ctx.body = JSON.stringify((await knex.select().from('messages')));
+  ctx.body = JSON.stringify((await _app__WEBPACK_IMPORTED_MODULE_1__["knex"].select().from('messages')));
 });
 router.get('/api/posts', async (ctx, next) => {
   // content - can have strong weight
   const page = isNaN(ctx.query.page) ? 1 : ctx.query.page,
         params = ['id', 'url', 'pagetitle', 'status', 'title', 'created_on'],
-        body = JSON.stringify((await knex('posts').select(params).groupBy(params).orderBy('title').paginate(3, page)));
+        body = JSON.stringify((await Object(_app__WEBPACK_IMPORTED_MODULE_1__["knex"])('posts').select(params).groupBy(params).orderBy('title').paginate(3, page)));
   ctx.body = ctx.query.page !== undefined && isNaN(ctx.query.page) ? [] : body;
 });
 router.get('/api/posts/:path', async (ctx, next) => {
   const path = isNaN(ctx.params.path) ? 'url' : 'id';
-  ctx.body = JSON.stringify((await knex('posts').select().where(path, ctx.params.path)));
+  ctx.body = JSON.stringify((await Object(_app__WEBPACK_IMPORTED_MODULE_1__["knex"])('posts').select().where(path, ctx.params.path)));
 });
 router.post('/api/auth', // koaBody({ multipart: true }),
 async (ctx, next) => {
-  const user = JSON.stringify((await knex('users').select('email').where('email', 'admin@mail.ru')));
+  const user = JSON.stringify((await Object(_app__WEBPACK_IMPORTED_MODULE_1__["knex"])('users').select('email').where('email', 'admin@mail.ru')));
   console.log(user); // здесь сравню emails
 
   ctx.body = {
@@ -376,6 +353,53 @@ async (ctx, next) => {
   };
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
+
+/***/ }),
+
+/***/ "./server/sockets.js":
+/*!***************************!*\
+  !*** ./server/sockets.js ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app */ "./server/app.js");
+/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! socket.io */ "socket.io");
+/* harmony import */ var socket_io__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(socket_io__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+const io = socket_io__WEBPACK_IMPORTED_MODULE_1__(_app__WEBPACK_IMPORTED_MODULE_0__["server"]);
+
+io.sockets.on('connection', client => {
+  console.log('a user connected: ' + client.id);
+  client.join('messages');
+  client.on('message', req => {
+    insertInto(req);
+    io.to('messages').emit('message', req.message);
+  }); // statuses
+
+  client.join('statuses');
+  client.on('status', req => {
+    Object(_app__WEBPACK_IMPORTED_MODULE_0__["knex"])('posts').where({
+      id: req.id
+    }).update('status', req.status).then(() => {
+      console.log(req);
+    });
+    io.to('statuses').emit('status', req.status);
+  });
+});
+
+const insertInto = req => {
+  req.idroom = 'messages';
+  _app__WEBPACK_IMPORTED_MODULE_0__["knex"].insert([req], ['id']).into('messages').then(() => {
+    console.log(req);
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (io);
 
 /***/ }),
 

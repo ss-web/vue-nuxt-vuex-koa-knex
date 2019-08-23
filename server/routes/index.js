@@ -1,10 +1,7 @@
 import * as Router from 'koa-router'
-import * as options from '../../knexfile'
-import '../plugins/paginate'
-import * as _knex from '../plugins/paginate'
+import { knex } from '../app'
 
 // const koaBody = require('koa-body')
-const knex = _knex(options.development)
 
 const router = new Router()
 
