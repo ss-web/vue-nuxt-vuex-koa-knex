@@ -35,7 +35,7 @@
     "utf-8-validate": "^5.0.2",
     "vue-socket.io": "^3.0.7",
     "vue-socket.io-extended": "^4.0.0",
-    "yarn": "^1.17.3"
+    "yarn": "^1.22.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
