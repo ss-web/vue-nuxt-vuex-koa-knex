@@ -1,4 +1,4 @@
-const messages = require('../data/messagesDB');
+const messages = require('../assets/db-data/messagesDB');
 
 exports.seed = function(knex) {
   return knex('messages').del()

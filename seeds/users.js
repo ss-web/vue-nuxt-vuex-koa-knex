@@ -1,4 +1,4 @@
-const users = require('../data/usersDB');
+const users = require('../assets/db-data/usersDB');
 
 exports.seed = function(knex) {
   return knex('users').del()

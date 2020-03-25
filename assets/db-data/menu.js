@@ -1,0 +1,44 @@
+module.exports = [
+  {
+    "name": "Вентиляция",
+    "slug": "ventilaciya",
+    "submenu": [
+      {
+        "name": "Вентилятор и решетки",
+        "slug": "ventilyatory_i_reshetki/",
+        "submenu": [
+          {
+            "name": "Моська",
+            "slug": "mosika/"
+          },
+          {
+            "name": "Сюська",
+            "slug": "suska"
+          }
+        ]
+      },
+      {
+        "name": "Вентиляционные изделия оцинкованные",
+        "slug": "otsinkovannyye_ventilyatsionnyye_izdeliya"
+      },
+      {
+        "name": "Гибкие воздуховоды",
+        "slug": "gibkiye_vozdukhovody"
+      }
+    ]
+  },
+  {
+    "name": "Гипсокартон, ГВЛ, Профили, Подвесы",
+    "slug": "gipsokarton_gvl_profili_podvesy",
+    "submenu": [
+      {
+        "name": "Гипсокартон",
+        "slug": "gipsokarton"
+      },
+      {
+        "name": "Гипсоволокно ГВЛВ",
+        "slug": "gipsovolokno_gvlv"
+      }
+    ]
+  }
+]

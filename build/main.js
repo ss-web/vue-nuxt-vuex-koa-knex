@@ -88,6 +88,31 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./knexfile.js":
+/*!*********************!*\
+  !*** ./knexfile.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  development: {
+    client: 'pg',
+    connection: {
+      host: process.env.POSTGRESS_HOST,
+      user: process.env.POSTGRESS_USER,
+      password: process.env.POSTGRESS_PASSWORD,
+      database: process.env.POSTGRESS_DB
+    },
+    pool: {
+      min: 0,
+      max: 7
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./nuxt.config.js":
 /*!************************!*\
   !*** ./nuxt.config.js ***!
@@ -100,7 +125,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'app title',
+    title: 'SS-web project',
     meta: [{
       charset: 'utf-8'
     }, {
@@ -175,7 +200,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var koa__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(koa__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! http */ "http");
 /* harmony import */ var http__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./knexfile */ "./server/knexfile.js");
+/* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../knexfile */ "./knexfile.js");
 /* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/paginate */ "./server/plugins/paginate.js");
 /* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_plugins_paginate__WEBPACK_IMPORTED_MODULE_3__);
@@ -183,11 +208,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const HOST = '127.0.0.2';
+const PORT = 4000;
 
 const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a(),
       knex = _plugins_paginate__WEBPACK_IMPORTED_MODULE_3__(_knexfile__WEBPACK_IMPORTED_MODULE_2__["development"]),
-      host = process.env.HOST || '127.0.0.1',
-      port = process.env.PORT || 3000,
+      host = process.env.HOST || HOST,
+      port = process.env.PORT || PORT,
       server = http__WEBPACK_IMPORTED_MODULE_1___default.a.createServer(app.callback());
 
 
@@ -242,31 +269,6 @@ var start = async function () {
 };
 
 start();
-
-/***/ }),
-
-/***/ "./server/knexfile.js":
-/*!****************************!*\
-  !*** ./server/knexfile.js ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = {
-  development: {
-    client: 'pg',
-    connection: {
-      host: 'localhost',
-      user: 'postgres',
-      password: '1',
-      database: 'chat'
-    },
-    pool: {
-      min: 0,
-      max: 7
-    }
-  }
-};
 
 /***/ }),
 

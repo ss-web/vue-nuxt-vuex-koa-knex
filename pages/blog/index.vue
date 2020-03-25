@@ -26,8 +26,8 @@
             <template v-if="selectStatusesShow">{{post.status}}</template>
             <div class="form-group" v-else>
               <select class="form-control" @change="changeStatus($event, post.id)">
-                <option 
-                  v-for="item of statuses" 
+                <option
+                  v-for="item of statuses"
                   :value="item.id"
                   :selected="item.id == post.status ? 'selected' : ''"
                   :key="item.id">
@@ -43,15 +43,26 @@
   </section>
 </template>
 
-<script>  
+<script>
+  import { mapGetters } from 'vuex';
+
+
   export default {
     middleware: ['auth'],
+
+
     async fetch({store}){
       if (store.getters['posts/posts'].length === 0) {
-        console.log(store.getters['posts/posts'])
-        await store.dispatch('posts/fetch')
+
+        /*
+        * GET POSTS
+        */
+        console.log(store.getters['posts/posts']);
+        await store.dispatch('posts/fetch');
       }
     },
+
+
     data: () => ({
       pageTitle: 'All posts',
       statuses: [
@@ -60,26 +71,33 @@
         { id: 3 , name: 'no-active' }
       ]
     }),
+
+
     computed: {
-      posts() {
-        return this.$store.getters['posts/posts']
-      },
+      ...mapGetters({
+        posts: 'posts/posts',
+        role: 'auth/getRole'
+      }),
+
       selectStatusesShow() {
-        const role = this.$store.getters['auth/getRole']
+        const role = this.role;
         return (role === 1) ? true : false
       }
     },
+
+
     methods: {
       openPage(path) {
-        this.$router.push('/blog/' + path.url)
+        this.$router.push('/blog/' + path.url);
       },
+
       changeStatus(event, idPost) {
         const changes = {
           id: idPost,
           status: Number(event.target.value)
-        }
+        };
         this.$store.dispatch("posts/changeStatus", changes);
-        this.$socket.emit('status', changes)
+        this.$socket.emit('status', changes);
       },
     }
   }

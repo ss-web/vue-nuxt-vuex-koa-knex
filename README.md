@@ -5,6 +5,10 @@
 ## Build Setup
 
 ``` bash
+# install postgresql
+$ sudo apt-get update
+$ sudo apt-get install postgresql postgresql-contrib
+
 # install dependencies
 $ yarn install # Or yarn install
 

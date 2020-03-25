@@ -1,4 +1,4 @@
-const posts = require('../data/blogDB');
+const posts = require('../assets/db-data/blogDB');
 
 exports.seed = function(knex) {
   return knex('posts').del()
