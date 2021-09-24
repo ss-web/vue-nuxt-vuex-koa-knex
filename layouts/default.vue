@@ -1,39 +1,24 @@
 <template>
-  <div class="temptale">
-    <section>
-      <navbar />
-      <br>
-      <section class="container">
-        <nuxt/>
-      </section>
-    </section>
-    <footer class="bg-dark text-light">
-      <section class="container">
-        <div class="navbar navbar-expand-lg navbar-light">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus odit fugiat aut placeat modi aperiam consequuntur doloribus dolores quas non, ipsa officiis corporis,
-          quisquam saepe, blanditiis voluptatibus quod. Aperiam, officiis.
-        </div>
-      </section>
-    </footer>
+  <div class="template">
+    <div>
+      <Header />
+      <main class="content">
+        <nuxt />
+      </main>
+    </div>
+    <Footer />
   </div>
 </template>
 
-<script>
-import NavBar from '~/components/NavBar.vue'
-
-export default {
-  components: {
-    'navbar': NavBar
+<style lang="scss" scoped>
+  .template{
+    background-color: $grey-light;
+    min-height: 100.1vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
-}
-</script>
-
-<style lang="sass" scoped>
-
-  .temptale
-    display: flex
-    justify-content: space-between
-    flex-direction: column
-    min-height: 100vh
-
+  .content{
+    margin-top: 100px;
+  }
 </style>

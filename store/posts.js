@@ -1,26 +1,42 @@
+
 export const state = () => ({
-    posts: []
+  list: [],
+  categories: [],
+  countPages: 0
 })
 
 export const mutations = {
-    SET_POSTS(state, posts) {
-        state.posts = posts
-    },    
-    CHANGE_STATUS(state, payload) {
-        state.posts.data.find(x => x.id === payload.id).status = payload.status;
-    }
+  setPosts(state, list) {
+    state.list = list;
+  },
+  setCategories(state, categories) {
+    state.categories = categories;
+  },
+  setCountPages(state, number) {
+    state.countPages = number;
+  },
+  setActiveCategory(state, category) {
+    state.activeCategory = category;
+  }
 }
 
 export const actions = {
-    async fetch({commit}) {
-        const posts = await this.$axios.$get('/api/posts')
-        commit('SET_POSTS', posts)
-    },
-    changeStatus(context, status) {
-      context.commit("CHANGE_STATUS", status);
-    }
+  async fetch({commit}, params) {
+    const page = params?.page || 1;
+    const category = params?.category ? `&category=${params?.category}` : '';
+    const p = await this.$axios.$get(`posts/?fields=slug,categories,post_thumbnail,title,date${category}&number=20&page=${page}`);
+    commit('setCountPages', Math.ceil(p?.found / 20));
+    commit('setPosts', p?.posts);
+  },
+  async fetchCategories({commit}) {
+		console.log(this.$axios);
+    // const с = await this.$axios.$get('/categories');
+    // commit('setCategories', с?.categories);
+  }
 }
 
 export const getters = {
-    posts: s => s.posts
+  list: s => s.list,
+  categories: s => s.categories,
+  countPages: s => s.countPages
 }

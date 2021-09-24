@@ -22,5 +22,5 @@ module.exports = [
     "title": "test3",
     "status": 1,
     "created_on": "2019-08-06T15:40:50.796Z"
-  } 
+  }
 ]

@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
-        <nuxt/>
-    </section>
+	<section class="container">
+		<nuxt/>
+	</section>
 </template>

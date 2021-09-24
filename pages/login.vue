@@ -9,7 +9,7 @@
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
     <nuxt-link class="btn btn-primary" to="/">Back to main</nuxt-link>
-  </form>                         
+  </form>
 </template>
 
 <script>
