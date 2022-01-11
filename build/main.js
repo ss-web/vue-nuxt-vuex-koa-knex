@@ -254,8 +254,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var http__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../knexfile */ "./knexfile.js");
 /* harmony import */ var _knexfile__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_knexfile__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./plugins/paginate */ "./server/plugins/paginate.js");
-/* harmony import */ var _plugins_paginate__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_plugins_paginate__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! knex */ "knex");
+/* harmony import */ var knex__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(knex__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var knex_paginate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! knex-paginate */ "knex-paginate");
+/* harmony import */ var knex_paginate__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(knex_paginate__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -264,11 +267,12 @@ const HOST = '127.0.0.2';
 const PORT = 4000;
 
 const app = new koa__WEBPACK_IMPORTED_MODULE_0___default.a(),
-      knex = _plugins_paginate__WEBPACK_IMPORTED_MODULE_3__(_knexfile__WEBPACK_IMPORTED_MODULE_2__["development"]),
+      knex = knex__WEBPACK_IMPORTED_MODULE_3__(_knexfile__WEBPACK_IMPORTED_MODULE_2__["development"]),
       host = process.env.HOST || HOST,
       port = process.env.PORT || PORT,
       server = http__WEBPACK_IMPORTED_MODULE_1___default.a.createServer(app.callback());
 
+Object(knex_paginate__WEBPACK_IMPORTED_MODULE_4__["attachPaginate"])();
 
 
 /***/ }),
@@ -324,48 +328,6 @@ start();
 
 /***/ }),
 
-/***/ "./server/plugins/paginate.js":
-/*!************************************!*\
-  !*** ./server/plugins/paginate.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = function (dbConfig) {
-  var knex = __webpack_require__(/*! knex */ "knex")(dbConfig);
-
-  var KnexQueryBuilder = __webpack_require__(/*! knex/lib/query/builder */ "knex/lib/query/builder");
-
-  KnexQueryBuilder.prototype.paginate = function (per_page, current_page) {
-    var pagination = {};
-    var per_page = per_page || 10;
-    var page = current_page || 1;
-    if (page < 1) page = 1;
-    var offset = (page - 1) * per_page;
-    return Promise.all([this.clone().count('* as count').first(), this.offset(offset).limit(per_page)]).then(([total, rows]) => {
-      var count = total.count;
-      var rows = rows;
-      pagination.total = count;
-      pagination.per_page = per_page;
-      pagination.offset = offset;
-      pagination.to = offset + rows.length;
-      pagination.last_page = Math.ceil(count / per_page);
-      pagination.current_page = page;
-      pagination.from = offset;
-      pagination.data = rows;
-      return pagination;
-    });
-  };
-
-  knex.queryBuilder = function () {
-    return new KnexQueryBuilder(knex.client);
-  };
-
-  return knex;
-};
-
-/***/ }),
-
 /***/ "./server/routes/index.js":
 /*!********************************!*\
   !*** ./server/routes/index.js ***!
@@ -382,14 +344,22 @@ __webpack_require__.r(__webpack_exports__);
  // const koaBody = require('koa-body')
 
 const router = new koa_router__WEBPACK_IMPORTED_MODULE_0__();
+router.get('/api', async (ctx, next) => {
+  ctx.body = JSON.stringify({
+    status: 'OK'
+  });
+});
 router.get('/api/messages', async (ctx, next) => {
   ctx.body = JSON.stringify(await _app__WEBPACK_IMPORTED_MODULE_1__["knex"].select().from('messages'));
 });
 router.get('/api/posts', async (ctx, next) => {
   // content - can have strong weight
-  const page = isNaN(ctx.query.page) ? 1 : ctx.query.page,
+  const currentPage = isNaN(ctx.query.page) ? 1 : ctx.query.page,
         params = ['id', 'url', 'pagetitle', 'status', 'title', 'created_on'],
-        body = JSON.stringify(await Object(_app__WEBPACK_IMPORTED_MODULE_1__["knex"])('posts').select(params).groupBy(params).orderBy('title').paginate(3, page));
+        body = JSON.stringify(await Object(_app__WEBPACK_IMPORTED_MODULE_1__["knex"])('posts').select(params).groupBy(params).orderBy('title').paginate({
+    perPage: 10,
+    currentPage
+  }));
   ctx.body = ctx.query.page !== undefined && isNaN(ctx.query.page) ? [] : body;
 });
 router.get('/api/posts/:path', async (ctx, next) => {
@@ -479,14 +449,14 @@ module.exports = require("knex");
 
 /***/ }),
 
-/***/ "knex/lib/query/builder":
-/*!*****************************************!*\
-  !*** external "knex/lib/query/builder" ***!
-  \*****************************************/
+/***/ "knex-paginate":
+/*!********************************!*\
+  !*** external "knex-paginate" ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("knex/lib/query/builder");
+module.exports = require("knex-paginate");
 
 /***/ }),
 

@@ -13,7 +13,7 @@ var start = async function() {
     const builder = new Builder(nuxt)
     await builder.build()
   }
-  
+
   // app.use(mount('/api', rootRouter.middleware()).use(ctx => {
   //   ctx.status = 200
   //   ctx.respond = false

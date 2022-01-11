@@ -22,16 +22,16 @@ export const mutations = {
 
 export const actions = {
   async fetch({commit}, params) {
-    const page = params?.page || 1;
-    const category = params?.category ? `&category=${params?.category}` : '';
-    const p = await this.$axios.$get(`posts/?fields=slug,categories,post_thumbnail,title,date${category}&number=20&page=${page}`);
-    commit('setCountPages', Math.ceil(p?.found / 20));
-    commit('setPosts', p?.posts);
+    // const page = params?.page || 1;
+    // const category = params?.category ? `&category=${params?.category}` : '';
+    // const p = await this.$axios.$get(`api/posts`); // ?fields=slug,categories,post_thumbnail,title,date${category}&number=20&page=${page}
+		// console.log(p);
+    // commit('setCountPages', Math.ceil(p?.found / 20));
+    // commit('setPosts', p?.posts);
   },
   async fetchCategories({commit}) {
-		console.log(this.$axios);
-    // const с = await this.$axios.$get('/categories');
-    // commit('setCategories', с?.categories);
+    const с = await this.$axios.$get('/categories');
+    commit('setCategories', с?.categories);
   }
 }
 
