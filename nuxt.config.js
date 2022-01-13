@@ -1,37 +1,37 @@
 module.exports = {
 	telemetry: false,
 
-  /*
-  ** Headers of the page
-  */
-  head: {
-    title: 'SS-web project',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'description' }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
-  },
+	/*
+	** Headers of the page
+	*/
+	head: {
+		title: 'SS-web project(example for usage NUXT)',
+		meta: [
+			{ charset: 'utf-8' },
+			{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+			{ hid: 'description', name: 'description', content: 'description' }
+		],
+		link: [
+			{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+		]
+	},
 
 	env: {
 		apiAuthHeader: process.env.APP_API_URL
 	},
 
 	// Axios nain path
-  axios: {
+	axios: {
 		proxy: true
 	},
 
-  // class for active links in nav
+	// class for active links in nav
 	router: {
 		linkActiveClass: 'active',
 		linkExactActiveClass: 'exact-active',
 	},
 
-  // path for connection
+	// path for connection
 	publicRuntimeConfig: {
 		axios: {
 			withCredentials: true,
@@ -39,38 +39,38 @@ module.exports = {
 		}
 	},
 
-  /*
-  ** Customize the progress bar color
-  */
-  loading: { color: '#ffffff' },
+	/*
+	** Customize the progress bar color
+	*/
+	loading: { color: '#ffffff' },
 
 	css: [],
 
 	// Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+	components: true,
 
-  modules: [
-    '@nuxtjs/axios'
-  ],
+	modules: [
+		'@nuxtjs/axios'
+	],
 
-  plugins: [
+	plugins: [
 		'~/assets/styles/index.scss',
-    { src: '~/plugins/socket.io.js', ssr: false }
-  ],
+		{ src: '~/plugins/socket.io.js', ssr: false }
+	],
 
-  // path for build scss
+	// path for build scss
 	styleResources: {
 		scss: ['./assets/styles/*.scss']
 	},
 
 	buildModules: [
-    '@nuxtjs/style-resources'
-  ],
+		'@nuxtjs/style-resources'
+	],
 
-  /*
-  ** Build configuration
-  */
-  build: {
+	/*
+	** Build configuration
+	*/
+	build: {
 		// optimizations
 		// by default ~30 seconds
 		parallel: true, // ~30 seconds
@@ -83,19 +83,19 @@ module.exports = {
 			}
 		},
 
-    /*
-    ** Run ESLint on save
-    */
-    extend (config, { isDev, isClient }) {
-      if (isDev && isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
-    }
-  }
+		/*
+		** Run ESLint on save
+		*/
+		extend (config, { isDev, isClient }) {
+			if (isDev && isClient) {
+				config.module.rules.push({
+					enforce: 'pre',
+					test: /\.(js|vue)$/,
+					loader: 'eslint-loader',
+					exclude: /(node_modules)/
+				})
+			}
+		}
+	}
 }
 

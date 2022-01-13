@@ -1,70 +1,70 @@
 {
-  "name": "app",
-  "version": "1.0.0",
-  "description": "Nuxt.js project",
-  "author": "Simon Lebedev <sem.schakschin2010@gmail.com>",
-  "private": true,
-  "scripts": {
-    "dev": "backpack dev",
-    "build": "nuxt build && backpack build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "heroku-postbuild": "nuxt build && backpack build",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
-  },
-  "dependencies": {
-    "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/robots": "^2.4.2",
-    "@nuxtjs/sitemap": "^2.0.1",
-    "@nuxtjs/style-resources": "^1.2.1",
-    "@nuxtjs/svg-sprite": "^0.4.10",
-    "backpack-core": "^0.8.4",
-    "bufferutil": "^4.0.1",
-    "core-js": "^3.15.1",
-    "cross-env": "^5.2.0",
-    "http": "0.0.0",
-    "knex": "^0.95.11",
-    "knex-paginate": "^3.0.0",
-    "koa": "^2.7.0",
-    "koa-body": "^4.1.1",
-    "koa-mount": "^4.0.0",
-    "koa-router": "^7.4.0",
-    "koa-static": "^5.0.0",
-    "koa-trie-router": "^2.1.7",
-    "nodemon": "^2.0.2",
-    "nuxt": "^2.15.7",
-    "pg": "^8.7.1",
-    "sass": "^1.39.2",
-    "sass-loader": "^8.0.1",
-    "socket.io": "^2.2.0",
-    "utf-8-validate": "^5.0.2",
-    "vue-socket.io": "^3.0.7",
-    "vue-socket.io-extended": "^4.0.0",
-    "yarn": "^1.17.3"
-  },
-  "devDependencies": {
-    "ava": "^3.5.1",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "esm": "^3.2.25",
-    "jsdom": "^16.2.1",
-    "lodash": "^4.17.15",
-    "node-sass": "^4.13.0",
-    "prettier": "^1.19.1",
-    "sass-loader": "^8.0.1"
-  },
-  "ava": {
-    "files": [
-      "test/**/*"
-    ],
-    "require": [
-      "esm"
-    ]
-  }
+	"name": "app",
+	"version": "1.0.0",
+	"description": "Nuxt.js project",
+	"author": "Simon Lebedev <sem.schakschin2010@gmail.com>",
+	"private": true,
+	"scripts": {
+		"dev": "backpack dev",
+		"build": "nuxt build && backpack build",
+		"start": "nuxt start",
+		"generate": "nuxt generate",
+		"heroku-postbuild": "nuxt build && backpack build",
+		"lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+		"precommit": "npm run lint"
+	},
+	"dependencies": {
+		"@nuxtjs/axios": "^5.13.6",
+		"@nuxtjs/robots": "^2.4.2",
+		"@nuxtjs/sitemap": "^2.0.1",
+		"@nuxtjs/style-resources": "^1.2.1",
+		"@nuxtjs/svg-sprite": "^0.4.10",
+		"backpack-core": "^0.8.4",
+		"bufferutil": "^4.0.1",
+		"core-js": "^3.15.1",
+		"cross-env": "^5.2.0",
+		"http": "0.0.0",
+		"knex": "^0.95.11",
+		"knex-paginate": "^3.0.0",
+		"koa": "^2.7.0",
+		"koa-body": "^4.1.1",
+		"koa-mount": "^4.0.0",
+		"koa-router": "^7.4.0",
+		"koa-static": "^5.0.0",
+		"koa-trie-router": "^2.1.7",
+		"nodemon": "^2.0.2",
+		"nuxt": "^2.15.7",
+		"pg": "^8.7.1",
+		"sass": "^1.39.2",
+		"sass-loader": "^8.0.1",
+		"socket.io": "^2.2.0",
+		"utf-8-validate": "^5.0.2",
+		"vue-socket.io": "^3.0.7",
+		"vue-socket.io-extended": "^4.0.0",
+		"yarn": "^1.17.3"
+	},
+	"devDependencies": {
+		"ava": "^3.5.1",
+		"babel-eslint": "^10.1.0",
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.10.1",
+		"eslint-friendly-formatter": "^4.0.1",
+		"eslint-loader": "^3.0.3",
+		"eslint-plugin-prettier": "^3.1.2",
+		"eslint-plugin-vue": "^6.2.2",
+		"esm": "^3.2.25",
+		"jsdom": "^16.2.1",
+		"lodash": "^4.17.15",
+		"node-sass": "^4.13.0",
+		"prettier": "^1.19.1",
+		"sass-loader": "^8.0.1"
+	},
+	"ava": {
+		"files": [
+			"test/**/*"
+		],
+		"require": [
+			"esm"
+		]
+	}
 }

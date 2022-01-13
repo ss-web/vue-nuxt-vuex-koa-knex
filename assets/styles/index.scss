@@ -2,21 +2,21 @@
 @import 'grid';
 
 .date{
-  background: $grey-dark;
-  border-radius: 4px;
-  color: $white;
-  display: inline-flex;
-  font-size: 14px;
-  padding: 4px 8px;
+	background: $grey-dark;
+	border-radius: 4px;
+	color: $white;
+	display: inline-flex;
+	font-size: 14px;
+	padding: 4px 8px;
 }
 
 .content-txt{
-  background-color: $white;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
-  border-radius: 8px;
-  padding: 22px;
+	background-color: $white;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+	border-radius: 8px;
+	padding: 22px;
 }
 
 .chapter-title{
-  margin-left: 10px;
+	margin-left: 10px;
 }

@@ -8,17 +8,17 @@ const HOST = '127.0.0.2';
 const PORT = 4000;
 
 const app = new Koa(),
-      knex = _knex(options.development),
-      host = process.env.HOST || HOST,
-      port = process.env.PORT || PORT,
-      server = http.createServer(app.callback());
+			knex = _knex(options.development),
+			host = process.env.HOST || HOST,
+			port = process.env.PORT || PORT,
+			server = http.createServer(app.callback());
 
 attachPaginate();
 
 export {
-  app,
-  host,
-  server,
-  knex,
-  port
+	app,
+	host,
+	server,
+	knex,
+	port
 }

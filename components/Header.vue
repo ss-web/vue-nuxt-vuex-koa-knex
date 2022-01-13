@@ -1,40 +1,48 @@
 <template>
-  <div class="header">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-6">
-          <nav class="menu">
-            <nuxt-link v-for="l in links" :key="l.name" :to="l.path" v-html="l.name" />
-          </nav>
-        </div>
-        <div class="col-xs-6">
-          <div class="logo">
-            <a :href="customerLink" target="_blank">
+	<div class="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<nav class="menu">
+						<nuxt-link v-for="l in links" :key="l.name" :to="l.path" v-html="l.name" />
+					</nav>
+				</div>
+				<div class="col-xs-6">
+					<div class="logo">
+						<a :href="customerLink" target="_blank" class="login">
 							Login
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
 export default {
-  data: () => ({
-    customerLink: "/login",
-    links: [{
-      name: 'Chat',
-      path: '/'
-    },{
-      name: 'Blog',
-      path: '/blog'
-    }]
-  })
+	data() {
+		return {
+			customerLink: "/login",
+			links: [{
+				name: 'Chat',
+				path: '/'
+			},{
+				name: 'Blog',
+				path: '/blog'
+			}]
+		}
+	}
 }
 </script>
 
 <style lang="scss" scoped>
+	.login{
+		color: $blue;
+		font-size: 18px;
+		transition: .25s;
+		font-weight: bold;
+	}
 	.header{
 		background: $white;
 		box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);

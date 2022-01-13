@@ -137,7 +137,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'SS-web project',
+    title: 'SS-web project(example for usage NUXT)',
     meta: [{
       charset: 'utf-8'
     }, {
