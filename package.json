@@ -54,7 +54,7 @@
     "esm": "^3.2.25",
     "jsdom": "^16.2.1",
     "lodash": "^4.17.15",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.1"
   },
